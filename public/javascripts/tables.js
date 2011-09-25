@@ -7,7 +7,16 @@
       };
       x = generateRandom(1,20);
       y = generateRandom(1,20);
-      this.set({sum: x.toString() + ' x ' +  y.toString()});
+      this.set({x: x, y: y, answer: x * y});
+    },
+
+    markAnswer: function(answer) {
+      if (this.get('answer').toString() === answer) {
+        this.set({correctness: "It's the right answer!"});
+      }
+      else{
+        this.set({correctness: "Teddy says - wrong: try again!"});
+      } 
     }
   });
 
@@ -15,8 +24,24 @@
     tagName: 'span',
 
     initialize: function() {
-      _.bindAll(this, 'render');
+      _.bindAll(this, 'render', 'markAnswer', 'setCorrect');
       this.template = _.template($('#sum-template').html());
+      this.model.bind("change:correctness", this.setCorrect);
+    },
+
+    events: {
+      "submit #answer-form" : "markAnswer"
+    },
+
+    markAnswer: function() {
+      var val = this.$("input").val();
+      this.model.markAnswer(val);
+      // stop the form from submitting
+      event.preventDefault();
+    },
+
+    setCorrect: function() {
+      this.$('.answer').html(this.model.get('correctness'));
     },
 
     render: function() {
