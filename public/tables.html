@@ -18,16 +18,17 @@
     <script src="javascripts/Tables.js"></script>
 
     <script type="text/template" id="sum-template">
-      <span class="sum"><%= x %> x <%= y %> </span>  
       <form id="answer-form">
-        <input name="answer" type="text" />
+        <label for="answer" class="sum"><%= x %> x <%= y %> = </label>  
+        <input id="answer" type="text" />
+        <span class="answer"></span>
       </form>
-      <span class="answer"></span>
     </script>
 
   </head>
 
   <body>
+    <h1>Teddy Tables</h1>
     <div id="container">
     </div>
   </body>
