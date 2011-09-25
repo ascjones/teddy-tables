@@ -1,5 +1,14 @@
 (function() {
   window.Sum = Backbone.Model.extend({
+    initialize: function(){
+      var x, y;
+      var generateRandom = function(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      };
+      x = generateRandom(1,20);
+      y = generateRandom(1,20);
+      this.set({sum: x.toString() + ' x ' +  y.toString()});
+    }
   });
 
   window.SumView = Backbone.View.extend({
@@ -22,8 +31,9 @@
     },
 
     initialize: function() {
+      this.currentSum = new Sum();
       this.sumView = new SumView({
-        model: new Sum({sum: '2 x 2'})
+        model: this.currentSum
       })
     },
 
